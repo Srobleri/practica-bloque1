@@ -1,5 +1,5 @@
 // CONTENIDO DE LA PRÁCTICA:
-// Vamos a añadir elementos en una lista (con la clase "color-list") con javascript a partir del array aportado en este documento, en la constante "colorList" (ver imagen en el proyecto "ejemplo_lista.png"). 
+// Vamos a añadir elementos en una lista (con la clase "color-list") con javascript a partir del array aportado en este documento, en la constante "colorList" (ver imagen en el proyecto "ejemplo_lista.png").
 
 // Como se puede apreciar en la imagen, cada elemento que esté en una posición par de de la lista tiene que tener la clase "color-item--odd". Esta clase debe añadirse desde javascript, NO haciendo uso del selector css nth-of-type(odd) o similares. NOTA: En este caso vamos a considerar un elemento par pensando en el primer elemento como el 1 no como el 0.
 
@@ -28,35 +28,103 @@
 
 const colorList = [
   {
-    colorName: 'white',
-    hex: '#ffffff'
+    colorName: "white",
+    hex: "#ffffff"
   },
   {
-    colorName: 'red',
-    hex: '#ff0000'
+    colorName: "red",
+    hex: "#ff0000"
   },
   {
-    colorName: 'orange',
-    hex: '#ffa500'
+    colorName: "orange",
+    hex: "#ffa500"
   },
   {
-    colorName: 'yellow',
-    hex: '#ffff00'
+    colorName: "yellow",
+    hex: "#ffff00"
   },
   {
-    colorName: 'orchid',
-    hex: '#da70d6'
+    colorName: "orchid",
+    hex: "#da70d6"
   },
   {
-    colorName: 'pink',
-    hex: '#ffc0cb'
+    colorName: "pink",
+    hex: "#ffc0cb"
   },
   {
-    colorName: 'green',
-    hex: '#008000'
+    colorName: "green",
+    hex: "#008000"
   },
   {
-    colorName: 'silver',
-    hex: '#c0c0c0'
+    colorName: "silver",
+    hex: "#c0c0c0"
   }
 ];
+
+let lis = document.getElementsByClassName("color-list").children;
+
+function colors() {
+  var listaColores = document.querySelector("color-list");
+
+  for (i = 0; i < colorList.length; i++) {
+    var li = document.createElement("li");
+    li.classList.add("color-item");
+
+    var div1 = document.createElement("div");
+    var td1 = document.createTextNode("Color: " + colorList[i].colorName);
+    div1.appendChild(td1);
+    div1.classList.add("color-name");
+    li.appendChild(div1);
+
+    var div2 = document.createElement("div");
+    var td2 = document.createTextNode("Muestra");
+    div2.appendChild(td2);
+    div2.style.backgroundColor(colorList[i].hex);
+    div2.classList.add("color-show");
+    li.appendChild(div2);
+
+    var button1 = document.createElement("button");
+    var tb1 = document.createTextNode("Next item color");
+    button1.appendChild(tb1);
+    button1.classList.add("color-set");
+    button1.onclick = function() {
+      var padre = button1.parentNode;
+      if (i === colorList.length - 1) {
+        padre.style.backgroundColor(colorList[0].hex);
+      } else {
+        padre.style.backgroundColor(colorList[i + 1].hex);
+      }
+    };
+    li.appendChild(button1);
+
+    var button2 = document.createElement("button");
+    var tb2 = document.createTextNode("Page color");
+    button2.appendChild(tb2);
+    button2.classList.add("color-set");
+    button2.onclick = function() {
+      var fondo = document.getElementsByTagName("body");
+      fondo.style.backgroundColor(colorList[i].hex);
+    };
+    li.appendChild(button2);
+
+    listaColores.appendChild(li);
+  }
+
+  function pares() {
+    for (i = 0; i < lis.length; i++) {
+      if (i / 2 === 0 && i != 0) {
+        lis[i].classList.add("color-item--odd");
+      }
+    }
+  }
+
+  for (i = 0; i < lis.length; i++) {
+    lis[i].onclick = function() {
+      alert("body");
+    };
+
+    lis[i].item.onclick = function() {
+      alert(lis[i].firstChild.textContent);
+    };
+  }
+}
