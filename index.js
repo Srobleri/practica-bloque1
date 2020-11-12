@@ -61,10 +61,10 @@ const colorList = [
   }
 ];
 
-let lis = document.getElementsByClassName("color-list").children;
+let lis = document.getElementsByClassName("color-list")[0].children;
 
 function colors() {
-  var listaColores = document.querySelector("color-list");
+  let listaColores = document.getElementsByClassName("color-list");
 
   for (let i = 0; i < colorList.length; i++) {
     let li = document.createElement("li");
@@ -87,46 +87,49 @@ function colors() {
     var tb1 = document.createTextNode("Next item color");
     button1.appendChild(tb1);
     button1.classList.add("color-set");
-    button1.onclick = function() {
+    button1.addEventListener("click", function() {
       var padre = button1.parentNode;
       if (i === colorList.length - 1) {
         padre.style.backgroundColor(colorList[0].hex);
       } else {
         padre.style.backgroundColor(colorList[i + 1].hex);
       }
-    };
+    });
     li.appendChild(button1);
 
     var button2 = document.createElement("button");
     var tb2 = document.createTextNode("Page color");
     button2.appendChild(tb2);
     button2.classList.add("color-set");
-    button2.onclick = function() {
+    button2.addEventListener("click", function() {
       var fondo = document.getElementsByTagName("body");
       fondo.style.backgroundColor(colorList[i].hex);
-    };
+    });
     li.appendChild(button2);
 
-    listaColores.appendChild(li);
-  }
-
-  function pares() {
-    for (i = 0; i < lis.length; i++) {
-      if (i / 2 === 0 && i != 0) {
-        lis[i].classList.add("color-item--odd");
-      }
-    }
+    listaColores[0].appendChild(li);
   }
 
   for (i = 0; i < lis.length; i++) {
-    lis[i].onclick = function() {
-      alert("body");
-    };
-
-    lis[i].item.onclick = function() {
-      alert(lis[i].firstChild.textContent);
-    };
+    if (i % 2 === 0 && i != 0) {
+      lis[i].classList.add("color-item--odd");
+    }
   }
 }
 
-colors();
+function items() {
+  colors();
+
+  for (let i = 1; i < lis.length; i++) {
+    lis[i].addEventListener("click", function() {
+      alert("body");
+    });
+
+    lis[i].addEventListener("click", function() {
+      var text = colorList[i - 1].colorName;
+      alert(text);
+    });
+  }
+}
+
+items();
