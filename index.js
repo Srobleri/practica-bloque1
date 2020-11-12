@@ -66,8 +66,8 @@ let lis = document.getElementsByClassName("color-list").children;
 function colors() {
   var listaColores = document.querySelector("color-list");
 
-  for (i = 0; i < colorList.length; i++) {
-    var li = document.createElement("li");
+  for (let i = 0; i < colorList.length; i++) {
+    let li = document.createElement("li");
     li.classList.add("color-item");
 
     var div1 = document.createElement("div");
@@ -79,7 +79,7 @@ function colors() {
     var div2 = document.createElement("div");
     var td2 = document.createTextNode("Muestra");
     div2.appendChild(td2);
-    div2.style.backgroundColor(colorList[i].hex);
+    div2.style.backgroundColor = colorList[i].hex;
     div2.classList.add("color-show");
     li.appendChild(div2);
 
@@ -128,3 +128,5 @@ function colors() {
     };
   }
 }
+
+colors();
