@@ -87,23 +87,16 @@ function colors() {
     var tb1 = document.createTextNode("Next item color");
     button1.appendChild(tb1);
     button1.classList.add("color-set");
-    button1.addEventListener("click", function() {
-      var padre = button1.parentNode;
-      if (i === colorList.length - 1) {
-        padre.style.backgroundColor(colorList[0].hex);
-      } else {
-        padre.style.backgroundColor(colorList[i + 1].hex);
-      }
-    });
     li.appendChild(button1);
 
     var button2 = document.createElement("button");
     var tb2 = document.createTextNode("Page color");
     button2.appendChild(tb2);
     button2.classList.add("color-set");
-    button2.addEventListener("click", function() {
-      var fondo = document.getElementsByTagName("body");
-      fondo.style.backgroundColor(colorList[i].hex);
+    button2.addEventListener("click", e => {
+      let fondo = document.getElementsByTagName("body");
+      fondo[0].style.backgroundColor = colorList[i].hex;
+      e.stopPropagation();
     });
     li.appendChild(button2);
 
@@ -117,17 +110,32 @@ function colors() {
   }
 }
 
+colors();
+
+function asigButton() {
+  for (let i = 1; i < lis.length; i++) {
+    let childrens = lis[i].children;
+    console.log(childrens);
+    childrens[2].addEventListener("click", e => {
+      lis[i + 1].style.backgroundColor = colorList[i - 1].hex;
+      e.stopPropagation();
+    });
+  }
+}
+
+asigButton();
+
 function items() {
-  colors();
+  let fondo = document.body.addEventListener("click", e => {
+    alert("body");
+    e.stopPropagation();
+  });
 
   for (let i = 1; i < lis.length; i++) {
-    lis[i].addEventListener("click", function() {
-      alert("body");
-    });
-
-    lis[i].addEventListener("click", function() {
+    lis[i].addEventListener("click", e => {
       var text = colorList[i - 1].colorName;
       alert(text);
+      e.stopPropagation();
     });
   }
 }
